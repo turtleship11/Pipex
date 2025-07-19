@@ -29,5 +29,6 @@ typedef struct s_pipex
 
 void	free_all(char **arr);
 void	perror_exit(char *str);
+void	init_pipex(t_pipex *pipex, char **av);
 
 #endif

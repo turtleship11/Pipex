@@ -1,14 +1,8 @@
 #include "pipex.h"
 
-void	excute(char *av, char **envp)
+char **get_path(char **envp)
 {
-	char **cmd;
-	char *path;
-	char **paths;
-	int	i;
-	char full_path[1024];
-
-	cmd = ft_split(av, ' ');
+	char **temp;
 	while (*envp && ft_strncmp("PATH=", *envp, 5) != 0)
 		envp++;
 	if (!*envp)
@@ -16,8 +10,15 @@ void	excute(char *av, char **envp)
 		perror("PATH not found");
 		exit(1);
 	}
-	path = *envp + 5;
-	paths = ft_split(path, ':');
+	temp = ft_split(*envp + 5, ':');
+	return (temp);
+}
+
+void	try_exe(char **paths,char *cmd_n, char **cmd, char **envp)
+{
+	char full_path[1024];
+	int	i;
+
 	i = 0;
 	while(paths[i])
 	{
@@ -30,6 +31,17 @@ void	excute(char *av, char **envp)
 			execve(full_path, cmd, envp);
 		i++;
 	}
+}
+void	execute(char *av, char **envp)
+{
+	char **cmd;
+	char **paths;
+	int	i;
+	char full_path[1024];
+
+	cmd = ft_split(av, ' ');
+	paths = get_path(envp);
+	try_exe(paths, cmd[0], cmd, envp);
 	perror("cmd not found");
 	free_all(cmd);
 	free_all(paths);
@@ -64,25 +76,6 @@ void	parent_closed(t_pipex *pipex, int *fd)
     waitpid(pipex->pid2, NULL, 0);
 }
 
-void	init_pipex(t_pipex *pipex, char **av)
-{
-	if ((pipex->infile = open(av[1], O_RDONLY)) == -1)
-		perror_exit("infile error");
-
-	if ((pipex->outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644)) == -1)
-	{
-		close(pipex->infile);
-		perror_exit("outfile error");
-	}
-
-	if (pipe(pipex->fd) == -1)
-	{
-		close(pipex->infile);
-		close(pipex->outfile);
-		perror_exit("pipe error");
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_pipex pipex;
@@ -96,7 +89,7 @@ int	main(int ac, char **av, char **envp)
 	if (pipex.pid1 == 0)
 	{
 		pid1_set(&pipex, pipex.fd);
-		excute(av[2], envp);
+		execute(av[2], envp);
 	}
 	pipex.pid2 = fork();
 	if (pipex.pid2 == -1)
@@ -104,7 +97,7 @@ int	main(int ac, char **av, char **envp)
 	if (pipex.pid2 == 0)
 	{
 		pid2_set(&pipex, pipex.fd);
-		excute(av[3], envp);
+		execute(av[3], envp);
 	}
 	parent_closed(&pipex, pipex.fd);
     return (0);
