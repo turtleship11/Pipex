@@ -1,0 +1,11 @@
+total 128
+-rw-r--r--   1 jaekwanglee  staff    320 Jul 19 09:28 Makefile
+-rw-r--r--   1 jaekwanglee  staff      8 Jul 19 07:26 README.md
+-rw-r--r--   1 jaekwanglee  staff    200 Jul 19 10:52 helper.c
+-rw-r--r--   1 jaekwanglee  staff    952 Jul 19 10:53 helper.o
+drwxr-xr-x  73 jaekwanglee  staff   2336 Jul 19 08:12 libft
+-rw-r--r--   1 jaekwanglee  staff   2470 Jul 19 11:30 main.c
+-rw-r--r--   1 jaekwanglee  staff   3304 Jul 19 11:30 main.o
+-rwxr-xr-x   1 jaekwanglee  staff  34168 Jul 19 11:30 pipex
+-rw-r--r--   1 jaekwanglee  staff   1180 Jul 19 11:27 pipex.h
+-rw-r--r--   1 jaekwanglee  staff      0 Jul 19 11:31 test.txt

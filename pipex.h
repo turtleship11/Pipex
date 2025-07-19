@@ -13,15 +13,21 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "../libft/libft.h"
+# include "libft/libft.h"
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdio.h>
 
 typedef struct s_pipex
 {
-	char	*infile;
-	char	*outfile;
-	pid_t	pid;
+	int		infile;
+	int		outfile;
+	pid_t	pid1;
+	pid_t	pid2;
+	int		fd[2];
 }	t_pipex;
+
+void	free_all(char **arr);
+void	perror_exit(char *str);
 
 #endif

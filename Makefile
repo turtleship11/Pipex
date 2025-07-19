@@ -4,7 +4,7 @@ CC = cc
 
 NAME = pipex
 
-SRCS = main.c 
+SRCS = main.c helper.c
 
 .SECONDARY: $(OBJS)
 
@@ -15,7 +15,7 @@ all: $(NAME)
 
 
 %.o: %.c
-	$(CC) $(CFLAGS) libft/libft.a -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS)  $(OBJS) libft/libft.a -o $(NAME)
