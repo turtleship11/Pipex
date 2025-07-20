@@ -6,7 +6,7 @@
 /*   By: jaeklee <jaeklee@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 10:36:19 by jaeklee           #+#    #+#             */
-/*   Updated: 2025/07/18 11:10:41 by jaeklee          ###   ########.fr       */
+/*   Updated: 2025/07/20 16:16:59 by jaeklee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define PIPEX_H
 
 # include "libft/libft.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
+# include <fcntl.h>
+# include <stdio.h>
+# include <sys/wait.h>
+# include <unistd.h>
 
 typedef struct s_pipex
 {
@@ -25,10 +26,13 @@ typedef struct s_pipex
 	pid_t	pid1;
 	pid_t	pid2;
 	int		fd[2];
-}	t_pipex;
+}			t_pipex;
 
-void	free_all(char **arr);
-void	perror_exit(char *str);
-void	init_pipex(t_pipex *pipex, char **av);
+void		free_all(char **arr);
+void		perror_exit(char *str);
+void		init_pipex(t_pipex *pipex);
+void		pid1_set(t_pipex *pipex, int *fd, char **av);
+void		pid2_set(t_pipex *pipex, int *fd, char **av);
+void		parent_closed(t_pipex *pipex, int *fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jaeklee <jaeklee@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:51:11 by jaeklee           #+#    #+#             */
-/*   Updated: 2025/04/23 10:08:54 by jaeklee          ###   ########.fr       */
+/*   Updated: 2025/07/20 15:58:49 by jaeklee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,6 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 			i--;
 			d[i] = s[i];
 		}
-	}	
+	}
 	return (dest);
 }
