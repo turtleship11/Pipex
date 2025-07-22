@@ -23,9 +23,6 @@ $(NAME): $(OBJS) $(LIBFT_A)
 $(LIBFT_A):
 	$(MAKE) -C $(LIBFT_DIR)
 
-# $(NAME): $(OBJS)
-# 	$(CC) $(CFLAGS)  $(OBJS) libft/libft.a -o $(NAME)
-
 clean:
 	rm -f $(OBJS)
 	$(MAKE) clean -C $(LIBFT_DIR)

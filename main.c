@@ -6,7 +6,7 @@
 /*   By: jaeklee <jaeklee@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:37:26 by jaeklee           #+#    #+#             */
-/*   Updated: 2025/07/20 16:16:48 by jaeklee          ###   ########.fr       */
+/*   Updated: 2025/07/22 12:24:07 by jaeklee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_path(char **envp)
 	if (!*envp)
 	{
 		perror("PATH not found");
-		exit(1);
+		exit(127);
 	}
 	temp = ft_split(*envp + 5, ':');
 	return (temp);
@@ -29,18 +29,23 @@ char	**get_path(char **envp)
 
 void	try_exe(char **paths, char *cmd_n, char **cmd, char **envp)
 {
-	char	full_path[1024];
+	char	*full_path;
 	int		i;
+	char	*temp;
 
 	i = 0;
 	while (paths[i])
 	{
-		full_path[0] = '\0';
-		ft_strlcat(full_path, paths[i], 1024);
-		ft_strlcat(full_path, "/", 1024);
-		ft_strlcat(full_path, cmd_n, 1024);
+		temp = ft_strjoin(paths[i], "/");
+		if (!temp)
+			perror_exit("Memory allocation failed");
+		full_path = ft_strjoin(temp, cmd_n);
+		if (!full_path)
+			perror_exit("Memory allocation failed");
+		free(temp);
 		if (access(full_path, X_OK) == 0)
 			execve(full_path, cmd, envp);
+		free(full_path);
 		i++;
 	}
 	free_all(cmd);
@@ -60,6 +65,17 @@ void	execute(char *av, char **envp)
 		free_all(cmd);
 		perror("Empty command");
 		exit(127);
+	}
+	if (ft_strchr(cmd[0], '/'))
+	{
+		if (access(cmd[0], X_OK) == 0)
+			execve(cmd[0], cmd, envp);
+		else
+		{
+			perror("command not found");
+			free_all(cmd);
+			exit(127);
+		}
 	}
 	paths = get_path(envp);
 	try_exe(paths, cmd[0], cmd, envp);

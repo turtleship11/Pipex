@@ -6,7 +6,7 @@
 /*   By: jaeklee <jaeklee@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 10:36:19 by jaeklee           #+#    #+#             */
-/*   Updated: 2025/07/20 16:16:59 by jaeklee          ###   ########.fr       */
+/*   Updated: 2025/07/21 10:21:26 by jaeklee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,7 @@ void		init_pipex(t_pipex *pipex);
 void		pid1_set(t_pipex *pipex, int *fd, char **av);
 void		pid2_set(t_pipex *pipex, int *fd, char **av);
 void		parent_closed(t_pipex *pipex, int *fd);
-
+char		**get_path(char **envp);
+void		try_exe(char **paths, char *cmd_n, char **cmd, char **envp);
+void		execute(char *av, char **envp);
 #endif
