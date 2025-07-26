@@ -6,7 +6,7 @@
 /*   By: jaeklee <jaeklee@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 15:37:26 by jaeklee           #+#    #+#             */
-/*   Updated: 2025/07/22 12:24:07 by jaeklee          ###   ########.fr       */
+/*   Updated: 2025/07/26 17:05:17 by jaeklee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_path(char **envp)
 		envp++;
 	if (!*envp)
 	{
-		perror("PATH not found");
+		write(2, "PATH not found\n", 15);
 		exit(127);
 	}
 	temp = ft_split(*envp + 5, ':');
@@ -63,7 +63,7 @@ void	execute(char *av, char **envp)
 	if (!cmd || !cmd[0] || cmd[0][0] == '\0')
 	{
 		free_all(cmd);
-		perror("Empty command");
+		write(2, "Empty command\n", 14);
 		exit(127);
 	}
 	if (ft_strchr(cmd[0], '/'))
@@ -86,7 +86,11 @@ int	main(int ac, char **av, char **envp)
 	t_pipex	pipex;
 
 	if (ac != 5)
-		perror_exit("args error");
+	{
+		// perror("args error");
+		write(2, "args error\n", 11);
+		return (1);
+	}
 	init_pipex(&pipex);
 	pipex.pid1 = fork();
 	if (pipex.pid1 == -1)
@@ -105,5 +109,4 @@ int	main(int ac, char **av, char **envp)
 		execute(av[3], envp);
 	}
 	parent_closed(&pipex, pipex.fd);
-	return (0);
 }

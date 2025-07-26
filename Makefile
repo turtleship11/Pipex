@@ -5,9 +5,9 @@ NAME = pipex
 
 SRCS = main.c helper.c helper2.c
 
-.SECONDARY: $(OBJS)
-
 OBJS = $(SRCS:.c=.o)
+
+.SECONDARY: $(OBJS)
 
 LIBFT_DIR = libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
